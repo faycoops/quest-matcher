@@ -5,257 +5,228 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quest Finder</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,300;1,400&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-:root {
-  --cream: #f7f5f2;
-  --white: #ffffff;
-  --ink: #0a0a0a;
-  --body: #444;
-  --muted: #777;
-  --border: #e0ddd9;
-  --purple: #5b21b6;
-  --purple-mid: #7c3aed;
-  --purple-light: #a855f7;
-  --purple-pale: #f3e8ff;
-}
-html, body { background:var(--cream); color:var(--ink); font-family:'Inter',sans-serif; font-weight:400; -webkit-font-smoothing:antialiased; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#f7f5f2;color:#0a0a0a;-webkit-font-smoothing:antialiased;}
+nav{background:#0a0a0a;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:100;}
+.nlogo{display:flex;align-items:center;gap:10px;}
+.nicon{width:28px;height:28px;background:linear-gradient(135deg,#5b21b6,#a855f7);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.65rem;font-weight:800;}
+.ntext{color:#fff;font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;}
+#nc{color:rgba(255,255,255,0.4);font-size:0.72rem;}
+.pbar{height:3px;background:#e0ddd9;position:sticky;top:60px;z-index:99;}
+#pf{height:100%;background:linear-gradient(90deg,#5b21b6,#a855f7);width:0%;transition:width .4s;}
 
-/* NAV */
-nav { background:#0a0a0a; padding:0 28px; display:flex; align-items:center; justify-content:space-between; height:60px; position:sticky; top:0; z-index:100; }
-.nav-logo { display:flex; align-items:center; gap:10px; }
-.nav-logo-icon { width:28px; height:28px; background:linear-gradient(135deg,#5b21b6,#a855f7); border-radius:6px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.65rem; font-weight:800; box-shadow:0 0 12px rgba(168,85,247,0.5); }
-.nav-logo-text { font-size:0.78rem; font-weight:600; color:#fff; letter-spacing:0.08em; text-transform:uppercase; }
-#navCount { font-size:0.72rem; color:rgba(255,255,255,0.4); }
-
-/* PROGRESS */
-.progress-bar { height:3px; background:var(–border); position:sticky; top:60px; z-index:99; }
-#progressFill { height:100%; background:linear-gradient(90deg,#5b21b6,#a855f7); width:0%; transition:width .5s ease; }
-
-/* PAGES - all hidden by default except welcome */
-.page { display:none; min-height:calc(100vh - 63px); flex-direction:column; align-items:center; justify-content:center; padding:80px 28px; text-align:center; }
-.page.show { display:flex; }
+/* PAGES */
+.pg{min-height:calc(100vh - 63px);display:none;flex-direction:column;align-items:center;justify-content:center;padding:80px 28px;text-align:center;}
 
 /* WELCOME */
-.badge { display:inline-flex; align-items:center; gap:8px; background:#0a0a0a; color:#fff; font-size:0.65rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:7px 18px; border-radius:100px; margin-bottom:32px; }
-.badge-dot { width:5px; height:5px; border-radius:50%; background:#a855f7; }
-.welcome-h1 { font-family:‘Fraunces’,serif; font-weight:900; font-size:clamp(3rem,9vw,7rem); line-height:0.95; color:var(–ink); margin-bottom:16px; letter-spacing:-0.03em; }
-.welcome-h1 em { font-style:italic; font-weight:300; display:block; font-size:clamp(2.2rem,6vw,5rem); background:linear-gradient(135deg,#5b21b6,#a855f7); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-.welcome-sub { font-size:1.05rem; color:var(–muted); line-height:1.8; max-width:480px; margin:40px auto 52px; }
-.btn-begin { background:linear-gradient(135deg,#5b21b6,#a855f7); color:#fff; font-size:0.85rem; font-weight:700; padding:18px 56px; border-radius:100px; border:none; cursor:pointer; box-shadow:0 8px 40px rgba(91,33,182,0.35); font-family:‘Inter’,sans-serif; }
-.btn-begin:hover { opacity:0.9; transform:translateY(-2px); }
+#p0{display:flex;}
+.wh{font-family:‘Fraunces’,serif;font-weight:900;font-size:clamp(3rem,9vw,7rem);line-height:0.95;margin-bottom:16px;letter-spacing:-0.03em;}
+.wh em{font-style:italic;font-weight:300;display:block;font-size:clamp(2.2rem,6vw,5rem);background:linear-gradient(135deg,#5b21b6,#a855f7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.ws{font-size:1.05rem;color:#777;line-height:1.8;max-width:480px;margin:40px auto 52px;}
+.bbtn{background:linear-gradient(135deg,#5b21b6,#a855f7);color:#fff;font-size:0.85rem;font-weight:700;padding:18px 56px;border-radius:100px;border:none;cursor:pointer;font-family:‘Inter’,sans-serif;box-shadow:0 8px 40px rgba(91,33,182,0.35);}
 
-/* QUESTION PAGE */
-.q-eyebrow { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(–purple); margin-bottom:20px; }
-.q-title { font-family:‘Fraunces’,serif; font-weight:900; font-size:clamp(1.5rem,4vw,2.6rem); line-height:1.1; color:var(–ink); margin-bottom:48px; max-width:580px; text-transform:uppercase; }
-
-.choices { display:flex; flex-direction:column; gap:10px; width:100%; max-width:500px; }
-.choice { display:flex; align-items:center; gap:16px; padding:16px 22px; border-radius:14px; border:1.5px solid var(–border); background:var(–white); cursor:pointer; font-size:0.92rem; color:var(–body); text-align:left; width:100%; transition:all .15s; font-family:‘Inter’,sans-serif; }
-.choice:hover, .choice.sel { border-color:var(–purple); background:var(–purple-pale); color:var(–purple); font-weight:500; }
-.choice-key { width:26px; height:26px; border-radius:8px; border:1.5px solid currentColor; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.62rem; font-weight:700; }
-.choice.sel .choice-key { background:linear-gradient(135deg,#5b21b6,#a855f7); border-color:transparent; color:#fff; }
-
-.q-textarea { width:100%; max-width:540px; background:transparent; border:none; border-bottom:2px solid var(–border); padding:16px 0; color:var(–ink); font-family:‘Fraunces’,serif; font-style:italic; font-size:1.3rem; line-height:1.6; resize:none; outline:none; min-height:80px; caret-color:var(–purple); text-align:center; }
-.q-textarea::placeholder { color:#ccc; }
-.q-textarea:focus { border-bottom-color:var(–purple); }
-.q-hint { font-size:0.7rem; color:var(–muted); margin-top:10px; }
-
-.scale { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; width:100%; max-width:500px; margin-bottom:12px; }
-.scale-btn { width:48px; height:48px; border-radius:10px; border:1.5px solid var(–border); background:var(–white); color:var(–body); font-size:0.95rem; font-weight:600; cursor:pointer; font-family:‘Inter’,sans-serif; transition:all .15s; }
-.scale-btn:hover, .scale-btn.sel { border-color:var(–purple); background:linear-gradient(135deg,#5b21b6,#a855f7); color:#fff; }
-.scale-labels { display:flex; justify-content:space-between; width:100%; max-width:500px; }
-.scale-label { font-size:0.68rem; color:var(–muted); }
+/* QUESTION */
+.qey{font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#5b21b6;margin-bottom:20px;}
+.qt{font-family:‘Fraunces’,serif;font-weight:900;font-size:clamp(1.5rem,4vw,2.6rem);line-height:1.1;color:#0a0a0a;margin-bottom:48px;max-width:580px;text-transform:uppercase;}
+.choices{display:flex;flex-direction:column;gap:10px;width:100%;max-width:500px;}
+.ch{display:flex;align-items:center;gap:16px;padding:16px 22px;border-radius:14px;border:1.5px solid #e0ddd9;background:#fff;cursor:pointer;font-size:0.92rem;color:#444;text-align:left;width:100%;font-family:‘Inter’,sans-serif;transition:all .15s;}
+.ch:hover,.ch.sel{border-color:#5b21b6;background:#f3e8ff;color:#5b21b6;font-weight:500;}
+.ck{width:26px;height:26px;border-radius:8px;border:1.5px solid currentColor;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.62rem;font-weight:700;}
+.ch.sel .ck{background:linear-gradient(135deg,#5b21b6,#a855f7);border-color:transparent;color:#fff;}
+.qta{width:100%;max-width:540px;background:transparent;border:none;border-bottom:2px solid #e0ddd9;padding:16px 0;color:#0a0a0a;font-family:‘Fraunces’,serif;font-style:italic;font-size:1.3rem;line-height:1.6;resize:none;outline:none;min-height:80px;caret-color:#5b21b6;text-align:center;}
+.qta::placeholder{color:#ccc;}
+.qta:focus{border-bottom-color:#5b21b6;}
+.qhint{font-size:0.7rem;color:#777;margin-top:10px;}
+.scale{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;max-width:500px;margin-bottom:12px;}
+.sb{width:48px;height:48px;border-radius:10px;border:1.5px solid #e0ddd9;background:#fff;color:#444;font-size:0.95rem;font-weight:600;cursor:pointer;font-family:‘Inter’,sans-serif;transition:all .15s;}
+.sb:hover,.sb.sel{border-color:#5b21b6;background:linear-gradient(135deg,#5b21b6,#a855f7);color:#fff;}
+.slabs{display:flex;justify-content:space-between;width:100%;max-width:500px;}
+.slab{font-size:0.68rem;color:#777;}
 
 /* BOTTOM NAV */
-#bottomNav { display:none; position:sticky; bottom:0; background:rgba(247,245,242,0.97); border-top:1px solid var(–border); padding:16px 28px; align-items:center; justify-content:space-between; backdrop-filter:blur(10px); }
-#bottomNav.show { display:flex; }
-.btn-prev { background:transparent; border:1.5px solid var(–border); color:var(–muted); font-size:0.75rem; font-weight:600; padding:12px 24px; border-radius:100px; cursor:pointer; font-family:‘Inter’,sans-serif; }
-.btn-prev:hover { border-color:var(–ink); color:var(–ink); }
-.btn-next { background:linear-gradient(135deg,#5b21b6,#a855f7); color:#fff; font-size:0.78rem; font-weight:700; padding:14px 36px; border-radius:100px; border:none; cursor:pointer; font-family:‘Inter’,sans-serif; box-shadow:0 4px 20px rgba(91,33,182,0.3); }
-.btn-next:disabled { opacity:0.3; cursor:not-allowed; }
+#bnav{display:none;position:sticky;bottom:0;background:rgba(247,245,242,0.97);border-top:1px solid #e0ddd9;padding:16px 28px;align-items:center;justify-content:space-between;backdrop-filter:blur(10px);}
+.bprev{background:transparent;border:1.5px solid #e0ddd9;color:#777;font-size:0.75rem;font-weight:600;padding:12px 24px;border-radius:100px;cursor:pointer;font-family:‘Inter’,sans-serif;}
+.bnext{background:linear-gradient(135deg,#5b21b6,#a855f7);color:#fff;font-size:0.78rem;font-weight:700;padding:14px 36px;border-radius:100px;border:none;cursor:pointer;font-family:‘Inter’,sans-serif;box-shadow:0 4px 20px rgba(91,33,182,0.3);}
+.bnext:disabled{opacity:0.3;cursor:not-allowed;}
 
 /* LOADING */
-#loadingPage { min-height:calc(100vh - 63px); display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
-#loadingPage.show { display:flex; }
-.spinner { width:52px; height:52px; border-radius:50%; border:3px solid var(–border); border-top-color:var(–purple-mid); animation:spin 1s linear infinite; margin:0 auto 28px; }
-@keyframes spin { to{ transform:rotate(360deg); } }
-.load-txt { font-family:‘Fraunces’,serif; font-style:italic; font-size:1.3rem; color:#333; margin-bottom:8px; }
-.load-sub { font-size:0.8rem; color:var(–muted); }
+#pload{min-height:calc(100vh - 63px);display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.sp{width:52px;height:52px;border-radius:50%;border:3px solid #e0ddd9;border-top-color:#7c3aed;animation:spin 1s linear infinite;margin:0 auto 28px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ltxt{font-family:‘Fraunces’,serif;font-style:italic;font-size:1.3rem;color:#333;margin-bottom:8px;}
+.lsub{font-size:0.8rem;color:#777;}
 
 /* RESULT */
-#resultPage { display:none; background:var(–cream); }
-#resultPage.show { display:block; }
-.result-wrap { max-width:680px; margin:0 auto; padding:80px 28px 120px; }
-.result-pct { font-family:‘Fraunces’,serif; font-weight:900; font-size:clamp(5rem,15vw,10rem); line-height:1; background:linear-gradient(135deg,#5b21b6,#a855f7); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; display:block; text-align:center; }
-.result-pct-lbl { font-size:0.68rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(–muted); text-align:center; display:block; margin-bottom:48px; }
-.result-card { background:var(–white); border:1px solid var(–border); border-radius:20px; overflow:hidden; box-shadow:0 8px 60px rgba(0,0,0,0.08); margin-bottom:24px; }
-.result-top { background:#0a0a0a; padding:44px; position:relative; overflow:hidden; }
-.result-top::before { content:’’; position:absolute; inset:0; background:radial-gradient(ellipse at 80% 20%,rgba(91,33,182,0.4),transparent 60%); }
-.result-quest-lbl { font-size:0.6rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:10px; display:block; position:relative; z-index:1; }
-.result-quest-name { font-family:‘Fraunces’,serif; font-weight:900; font-style:italic; font-size:clamp(1.6rem,4vw,2.6rem); color:#fff; line-height:1.1; position:relative; z-index:1; }
-.result-body { padding:44px; }
-@media(max-width:640px){ .result-body{ padding:28px 24px; } .result-top{ padding:32px 24px; } }
-.result-why-lbl { font-size:0.6rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(–purple); margin-bottom:14px; display:block; }
-.result-why { font-family:‘Fraunces’,serif; font-style:italic; font-weight:300; font-size:1.2rem; line-height:1.75; color:var(–ink); margin-bottom:20px; padding-left:18px; border-left:3px solid var(–purple-pale); }
-.result-detail { font-size:0.92rem; color:var(–body); line-height:1.85; margin-bottom:28px; }
-.result-tags { display:flex; gap:8px; flex-wrap:wrap; }
-.result-tag { background:var(–purple-pale); color:var(–purple); font-size:0.7rem; font-weight:600; padding:6px 14px; border-radius:100px; }
-.result-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; justify-content:center; }
-.btn-explore { background:linear-gradient(135deg,#5b21b6,#a855f7); color:#fff; font-size:0.82rem; font-weight:700; padding:16px 44px; border-radius:100px; border:none; cursor:pointer; box-shadow:0 4px 20px rgba(91,33,182,0.3); font-family:‘Inter’,sans-serif; }
-.btn-explore:hover { opacity:0.9; transform:translateY(-2px); }
-.btn-retry { background:transparent; color:var(–muted); font-size:0.82rem; font-weight:600; padding:16px 32px; border-radius:100px; border:1.5px solid var(–border); cursor:pointer; font-family:‘Inter’,sans-serif; }
-.btn-retry:hover { border-color:var(–ink); color:var(–ink); }
-.result-footer { text-align:center; margin-top:52px; padding-top:28px; border-top:1px solid var(–border); }
-.result-footer p { font-size:0.8rem; color:var(–muted); }
-.result-footer strong { color:var(–purple); font-weight:600; }
+#pres{display:none;background:#f7f5f2;}
+.rw{max-width:680px;margin:0 auto;padding:80px 28px 120px;}
+.rpct{font-family:‘Fraunces’,serif;font-weight:900;font-size:clamp(5rem,15vw,10rem);line-height:1;background:linear-gradient(135deg,#5b21b6,#a855f7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:block;text-align:center;}
+.rplbl{font-size:0.68rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#777;text-align:center;display:block;margin-bottom:48px;}
+.rc{background:#fff;border:1px solid #e0ddd9;border-radius:20px;overflow:hidden;box-shadow:0 8px 60px rgba(0,0,0,0.08);margin-bottom:24px;}
+.rt{background:#0a0a0a;padding:44px;position:relative;overflow:hidden;}
+.rt::before{content:’’;position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(91,33,182,0.4),transparent 60%);}
+.rql{font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:10px;display:block;position:relative;z-index:1;}
+.rqn{font-family:‘Fraunces’,serif;font-weight:900;font-style:italic;font-size:clamp(1.6rem,4vw,2.6rem);color:#fff;line-height:1.1;position:relative;z-index:1;}
+.rb{padding:44px;}
+@media(max-width:640px){.rb{padding:28px 24px;}.rt{padding:32px 24px;}}
+.rwl{font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#5b21b6;margin-bottom:14px;display:block;}
+.rwy{font-family:‘Fraunces’,serif;font-style:italic;font-weight:300;font-size:1.2rem;line-height:1.75;color:#0a0a0a;margin-bottom:20px;padding-left:18px;border-left:3px solid #f3e8ff;}
+.rdet{font-size:0.92rem;color:#444;line-height:1.85;margin-bottom:28px;}
+.rtags{display:flex;gap:8px;flex-wrap:wrap;}
+.rtag{background:#f3e8ff;color:#5b21b6;font-size:0.7rem;font-weight:600;padding:6px 14px;border-radius:100px;}
+.ract{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;justify-content:center;}
+.rexp{background:linear-gradient(135deg,#5b21b6,#a855f7);color:#fff;font-size:0.82rem;font-weight:700;padding:16px 44px;border-radius:100px;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(91,33,182,0.3);font-family:‘Inter’,sans-serif;}
+.rret{background:transparent;color:#777;font-size:0.82rem;font-weight:600;padding:16px 32px;border-radius:100px;border:1.5px solid #e0ddd9;cursor:pointer;font-family:‘Inter’,sans-serif;}
+.rftr{text-align:center;margin-top:52px;padding-top:28px;border-top:1px solid #e0ddd9;}
+.rftr p{font-size:0.8rem;color:#777;}
+.rftr strong{color:#5b21b6;font-weight:600;}
 </style>
 
 </head>
 <body>
-
 <nav>
-  <div class="nav-logo">
-    <div class="nav-logo-icon">MV</div>
-    <span class="nav-logo-text">Quest Finder</span>
+  <div class="nlogo">
+    <div class="nicon">MV</div>
+    <span class="ntext">Quest Finder</span>
   </div>
-  <span id="navCount"></span>
+  <span id="nc"></span>
 </nav>
-<div class="progress-bar"><div id="progressFill"></div></div>
+<div class="pbar"><div id="pf"></div></div>
 
-<!-- WELCOME -->
-
-<div class="page show" id="pageWelcome">
-  <h1 class="welcome-h1">Find Your<em>Perfect Quest</em></h1>
-  <p class="welcome-sub">Answer 7 questions and our AI will match you to the Quest that will transform your life the most — right now.</p>
-  <button class="btn-begin" id="beginBtn">Begin →</button>
+<div class="pg" id="p0">
+  <h1 class="wh">Find Your<em>Perfect Quest</em></h1>
+  <p class="ws">Answer 7 questions and our AI will match you to the Quest that will transform your life the most — right now.</p>
+  <button class="bbtn" onclick="startQuiz()">Begin →</button>
 </div>
 
-<!-- QUESTION -->
-
-<div class="page" id="pageQ">
-  <p class="q-eyebrow" id="qEyebrow"></p>
-  <h2 class="q-title" id="qTitle"></h2>
-  <div id="qBody"></div>
+<div class="pg" id="p1">
+  <p class="qey" id="qey"></p>
+  <h2 class="qt" id="qt"></h2>
+  <div id="qb"></div>
 </div>
 
-<!-- LOADING -->
-
-<div id="loadingPage">
-  <div class="spinner"></div>
-  <p class="load-txt">Finding your perfect Quest…</p>
-  <p class="load-sub">Analysing your answers</p>
+<div id="pload">
+  <div class="sp"></div>
+  <p class="ltxt">Finding your perfect Quest…</p>
+  <p class="lsub">Analysing your answers</p>
 </div>
 
-<!-- RESULT -->
-
-<div id="resultPage">
-  <div class="result-wrap">
-    <span class="result-pct" id="rPct"></span>
-    <span class="result-pct-lbl">Match for you right now</span>
-    <div class="result-card">
-      <div class="result-top">
-        <span class="result-quest-lbl">Your Quest</span>
-        <h2 class="result-quest-name" id="rQuest"></h2>
+<div id="pres">
+  <div class="rw">
+    <span class="rpct" id="rpct"></span>
+    <span class="rplbl">Match for you right now</span>
+    <div class="rc">
+      <div class="rt">
+        <span class="rql">Your Quest</span>
+        <h2 class="rqn" id="rqn"></h2>
       </div>
-      <div class="result-body">
-        <span class="result-why-lbl">Why this is for you right now</span>
-        <p class="result-why" id="rWhy"></p>
-        <p class="result-detail" id="rDetail"></p>
-        <div class="result-tags" id="rTags"></div>
+      <div class="rb">
+        <span class="rwl">Why this is for you right now</span>
+        <p class="rwy" id="rwy"></p>
+        <p class="rdet" id="rdet"></p>
+        <div class="rtags" id="rtags"></div>
       </div>
     </div>
-    <div class="result-actions">
-      <button class="btn-explore" id="exploreBtn">Explore This Quest →</button>
-      <button class="btn-retry" id="retryBtn">↺ Retake</button>
+    <div class="ract">
+      <button class="rexp" onclick="window.location.href='https://faycoops.github.io/Becoming-you/'">Explore This Quest →</button>
+      <button class="rret" onclick="startOver()">↺ Retake</button>
     </div>
-    <div class="result-footer"><p>Built with intention by <strong>Fay</strong> · Inspired by <strong>Mindvalley</strong></p></div>
+    <div class="rftr"><p>Built with intention by <strong>Fay</strong> · Inspired by <strong>Mindvalley</strong></p></div>
   </div>
 </div>
 
-<!-- BOTTOM NAV -->
-
-<div id="bottomNav">
-  <button class="btn-prev" id="btnPrev">← Back</button>
-  <button class="btn-next" id="btnNext">Continue →</button>
+<div id="bnav">
+  <button class="bprev" id="bp" onclick="prevQ()">← Back</button>
+  <button class="bnext" id="bn" disabled>Continue →</button>
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-const KEY = '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';
-
-const QS = [
-  {id:'focus',type:'choice',text:'WHAT AREA OF YOUR LIFE FEELS MOST READY FOR A BREAKTHROUGH?',
-   opts:[{k:'A',v:'mindset',l:'🧠 My mindset & beliefs'},{k:'B',v:'relationships',l:'❤️ Love & relationships'},{k:'C',v:'health',l:'🌿 Health & energy'},{k:'D',v:'money',l:'💎 Money & career'},{k:'E',v:'purpose',l:'✦ Purpose & spirituality'}]},
-  {id:'feeling',type:'choice',text:'WHICH BEST DESCRIBES HOW YOU FEEL MOST DAYS?',
-   opts:[{k:'A',v:'stuck',l:"😔 Stuck — going in circles"},{k:'B',v:'lost',l:"🌫️ Lost — something's missing"},{k:'C',v:'ready',l:'⚡ Ready — I want the next level'},{k:'D',v:'healing',l:'🌱 Healing — working through something deep'},{k:'E',v:'curious',l:'🔍 Curious — I want to expand my mind'}]},
-  {id:'dream',type:'text',text:'WHAT DOES YOUR DREAM LIFE LOOK LIKE IN 3 YEARS?',ph:"I wake up doing work I love, with people who truly know me…"},
-  {id:'block',type:'choice',text:'WHAT IS HOLDING YOU BACK THE MOST RIGHT NOW?',
-   opts:[{k:'A',v:'beliefs',l:'🔒 Old beliefs about what I deserve'},{k:'B',v:'fear',l:'😨 Fear of failure or judgment'},{k:'C',v:'clarity',l:"🌀 I don't know what I actually want"},{k:'D',v:'habits',l:"⚙️ Bad habits I can't break"},{k:'E',v:'wounds',l:'💔 Past wounds not fully healed'}]},
-  {id:'growth',type:'scale',text:'HOW COMMITTED ARE YOU TO YOUR GROWTH RIGHT NOW?',min:1,max:10,minL:'Just exploring',maxL:'All in'},
-  {id:'tried',type:'text',text:'WHAT GROWTH TOOLS HAVE YOU ALREADY TRIED?',ph:"Books, therapy, coaching, meditation… what's worked and what hasn't…"},
-  {id:'want',type:'choice',text:'WHAT DO YOU MOST WANT TO FEEL AFTER YOUR QUEST?',
-   opts:[{k:'A',v:'clarity',l:'🎯 Total clarity on my direction'},{k:'B',v:'free',l:'🕊️ Free from my past'},{k:'C',v:'confident',l:'💪 Deeply confident in who I am'},{k:'D',v:'connected',l:'🤝 More connected to others'},{k:'E',v:'alive',l:'✨ More alive than ever'}]}
+var KEY='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';
+var cur=0,ans={};
+var QS=[
+  {id:'focus',type:'choice',text:'WHAT AREA FEELS MOST READY FOR A BREAKTHROUGH?',opts:[{k:'A',v:'mindset',l:'🧠 My mindset & beliefs'},{k:'B',v:'relationships',l:'❤️ Love & relationships'},{k:'C',v:'health',l:'🌿 Health & energy'},{k:'D',v:'money',l:'💎 Money & career'},{k:'E',v:'purpose',l:'✦ Purpose & spirituality'}]},
+  {id:'feeling',type:'choice',text:'HOW DO YOU FEEL MOST DAYS?',opts:[{k:'A',v:'stuck',l:'😔 Stuck — going in circles'},{k:'B',v:'lost',l:'🌫️ Lost — something is missing'},{k:'C',v:'ready',l:'⚡ Ready — I want the next level'},{k:'D',v:'healing',l:'🌱 Healing — working through something deep'},{k:'E',v:'curious',l:'🔍 Curious — I want to expand my mind'}]},
+  {id:'dream',type:'text',text:'WHAT DOES YOUR DREAM LIFE LOOK LIKE IN 3 YEARS?',ph:'I wake up doing work I love, with people who truly know me…'},
+  {id:'block',type:'choice',text:'WHAT IS HOLDING YOU BACK THE MOST?',opts:[{k:'A',v:'beliefs',l:'🔒 Old beliefs about what I deserve'},{k:'B',v:'fear',l:'😨 Fear of failure or judgment'},{k:'C',v:'clarity',l:'🌀 I do not know what I actually want'},{k:'D',v:'habits',l:'⚙️ Bad habits I cannot break'},{k:'E',v:'wounds',l:'💔 Past wounds not fully healed'}]},
+  {id:'growth',type:'scale',text:'HOW COMMITTED ARE YOU TO YOUR GROWTH?',min:1,max:10,minL:'Just exploring',maxL:'All in'},
+  {id:'tried',type:'text',text:'WHAT GROWTH TOOLS HAVE YOU ALREADY TRIED?',ph:'Books, therapy, coaching, meditation…'},
+  {id:'want',type:'choice',text:'WHAT DO YOU MOST WANT TO FEEL AFTER YOUR QUEST?',opts:[{k:'A',v:'clarity',l:'🎯 Total clarity on my direction'},{k:'B',v:'free',l:'🕊️ Free from my past'},{k:'C',v:'confident',l:'💪 Deeply confident in who I am'},{k:'D',v:'connected',l:'🤝 More connected to others'},{k:'E',v:'alive',l:'✨ More alive than ever'}]}
 ];
 
-let cur=0, ans={};
+function startQuiz(){
+  document.getElementById('p0').style.display='none';
+  document.getElementById('p1').style.display='flex';
+  document.getElementById('bnav').style.display='flex';
+  cur=0; ans={};
+  renderQ();
+}
 
-function show(id){
-  ['pageWelcome','pageQ','loadingPage','resultPage'].forEach(p=>{
-    const el=document.getElementById(p);
-    if(el) el.style.display='none';
-  });
-  document.getElementById(id).style.display = id==='resultPage' ? 'block' : 'flex';
+function startOver(){
+  document.getElementById('pres').style.display='none';
+  document.getElementById('p0').style.display='flex';
+  document.getElementById('bnav').style.display='none';
+  document.getElementById('pf').style.width='0%';
+  document.getElementById('nc').textContent='';
+  cur=0; ans={};
 }
 
 function renderQ(){
-  const q=QS[cur];
-  document.getElementById('qEyebrow').textContent=`Question ${cur+1} of ${QS.length}`;
-  document.getElementById('qTitle').textContent=q.text;
-  document.getElementById('navCount').textContent=`${cur+1} / ${QS.length}`;
-  document.getElementById('progressFill').style.width=`${((cur+1)/QS.length)*100}%`;
-  document.getElementById('btnPrev').style.visibility=cur>0?'visible':'hidden';
-  document.getElementById('btnNext').textContent=cur===QS.length-1?'Find My Quest →':'Continue →';
+  var q=QS[cur];
+  document.getElementById('qey').textContent='Question '+(cur+1)+' of '+QS.length;
+  document.getElementById('qt').textContent=q.text;
+  document.getElementById('nc').textContent=(cur+1)+' / '+QS.length;
+  document.getElementById('pf').style.width=((cur+1)/QS.length*100)+'%';
+  document.getElementById('bp').style.visibility=cur>0?'visible':'hidden';
+  document.getElementById('bn').textContent=cur===QS.length-1?'Find My Quest →':'Continue →';
+  document.getElementById('bn').disabled=true;
 
-  const body=document.getElementById('qBody');
+  var b=document.getElementById('qb');
+  var html='';
   if(q.type==='choice'){
-    body.innerHTML=`<div class="choices">${q.opts.map(o=>`<button class="choice${ans[q.id]===o.v?' sel':''}" data-val="${o.v}"><span class="choice-key">${o.k}</span><span>${o.l}</span></button>`).join('')}</div>`;
-    body.querySelectorAll('.choice').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        ans[q.id]=btn.dataset.val;
-        body.querySelectorAll('.choice').forEach(b=>b.classList.remove('sel'));
-        btn.classList.add('sel');
-        checkNext();
-        if(cur<QS.length-1) setTimeout(()=>goNext(),450);
-      });
-    });
+    html='<div class="choices">';
+    for(var i=0;i<q.opts.length;i++){
+      var o=q.opts[i];
+      var s=ans[q.id]===o.v?' sel':'';
+      html+='<button class="ch'+s+'" onclick="pickChoice(\''+q.id+'\',\''+o.v+'\',this)"><span class="ck">'+o.k+'</span><span>'+o.l+'</span></button>';
+    }
+    html+='</div>';
   } else if(q.type==='text'){
-    body.innerHTML=`<textarea class="q-textarea" placeholder="${q.ph}">${ans[q.id]||''}</textarea><p class="q-hint">Press Continue when ready</p>`;
-
-```
-body.querySelector('textarea').addEventListener('input',e=>{ ans[q.id]=e.target.value; checkNext(); });
-```
+    html='<textarea class="qta" id="qta" placeholder="'+q.ph+'" oninput="typeAns(\''+q.id+'\',this.value)">'+(ans[q.id]||'')+'</textarea><p class="qhint">Press Continue when ready</p>';
 
 } else if(q.type===‘scale’){
-let btns=’’;
-for(let i=q.min;i<=q.max;i++) btns+=`<button class="scale-btn${ans[q.id]==i?' sel':''}" data-val="${i}">${i}</button>`;
-body.innerHTML=`<div class="scale">${btns}</div><div class="scale-labels"><span class="scale-label">${q.minL}</span><span class="scale-label">${q.maxL}</span></div>`;
-body.querySelectorAll(’.scale-btn’).forEach(btn=>{
-btn.addEventListener(‘click’,()=>{
-ans[q.id]=parseInt(btn.dataset.val);
-body.querySelectorAll(’.scale-btn’).forEach(b=>b.classList.remove(‘sel’));
-btn.classList.add(‘sel’);
-checkNext();
-});
-});
+html=’<div class="scale">’;
+for(var n=q.min;n<=q.max;n++){
+var s2=ans[q.id]==n?’ sel’:’’;
+html+=’<button class="sb'+s2+'" onclick="pickScale(\''+q.id+'\','+n+',this)">’+n+’</button>’;
 }
-checkNext();
+html+=’</div><div class="slabs"><span class="slab">’+q.minL+’</span><span class="slab">’+q.maxL+’</span></div>’;
+}
+b.innerHTML=html;
+
+if(ans[q.id]) document.getElementById(‘bn’).disabled=false;
 }
 
-function checkNext(){
-const q=QS[cur];
-const disabled=q.type===‘text’?!ans[q.id]||ans[q.id].trim().length<5:!ans[q.id];
-document.getElementById(‘btnNext’).disabled=disabled;
+function pickChoice(id,v,el){
+ans[id]=v;
+var all=el.parentNode.querySelectorAll(’.ch’);
+for(var i=0;i<all.length;i++) all[i].classList.remove(‘sel’);
+el.classList.add(‘sel’);
+document.getElementById(‘bn’).disabled=false;
+if(cur<QS.length-1) setTimeout(goNext,450);
+}
+
+function pickScale(id,v,el){
+ans[id]=v;
+var all=el.parentNode.querySelectorAll(’.sb’);
+for(var i=0;i<all.length;i++) all[i].classList.remove(‘sel’);
+el.classList.add(‘sel’);
+document.getElementById(‘bn’).disabled=false;
+}
+
+function typeAns(id,v){
+ans[id]=v;
+document.getElementById(‘bn’).disabled=v.trim().length<5;
 }
 
 function goNext(){
@@ -263,55 +234,45 @@ if(cur<QS.length-1){ cur++; renderQ(); }
 else submitQuiz();
 }
 
-// Wire up buttons
-document.getElementById(‘beginBtn’).addEventListener(‘click’,()=>{
-show(‘pageQ’);
-document.getElementById(‘bottomNav’).classList.add(‘show’);
-renderQ();
-});
+function prevQ(){ if(cur>0){ cur–; renderQ(); } }
 
-document.getElementById(‘btnNext’).addEventListener(‘click’,goNext);
-document.getElementById(‘btnPrev’).addEventListener(‘click’,()=>{ if(cur>0){ cur–; renderQ(); } });
-document.getElementById(‘retryBtn’).addEventListener(‘click’,()=>{
-cur=0; ans={};
-document.getElementById(‘progressFill’).style.width=‘0%’;
-document.getElementById(‘navCount’).textContent=’’;
-document.getElementById(‘bottomNav’).classList.remove(‘show’);
-show(‘pageWelcome’);
-});
-document.getElementById(‘exploreBtn’).addEventListener(‘click’,()=>{
-window.location.href=‘https://faycoops.github.io/Becoming-you/’;
-});
+document.getElementById(‘bn’).onclick=goNext;
 
-async function submitQuiz(){
-show(‘loadingPage’);
-document.getElementById(‘bottomNav’).classList.remove(‘show’);
-const summary=QS.map(q=>`${q.text}\nAnswer: ${ans[q.id]}`).join(’\n\n’);
-try{
-const res=await fetch(‘https://api.anthropic.com/v1/messages’,{
+function submitQuiz(){
+document.getElementById(‘p1’).style.display=‘none’;
+document.getElementById(‘bnav’).style.display=‘none’;
+document.getElementById(‘pload’).style.display=‘flex’;
+
+var summary=’’;
+for(var i=0;i<QS.length;i++) summary+=QS[i].text+’\nAnswer: ‘+ans[QS[i].id]+’\n\n’;
+
+var prompt=‘Match this person to their best Quest.\n\n’+summary+’\nQuests:\n- Becoming You (self discovery, identity, healing, purpose)\n- Be Extraordinary (mindset, life design)\n- Lifebook (life vision)\n- Unlimited Abundance (money mindset)\n- Rapid Transformational Hypnotherapy (healing, self worth)\n- Duality (spirituality, energy)\n- 10X Brain Power (memory, learning)\n- The Happiness Quest (happiness, fulfilment)\n\nReturn ONLY valid JSON:\n{“quest”:“name only”,“match”:“94%”,“headline”:“one powerful sentence”,“why”:“2-3 personalised sentences”,“detail”:“2 sentences on transformation”,“tags”:[“tag1”,“tag2”,“tag3”,“tag4”]}’;
+
+fetch(‘https://api.anthropic.com/v1/messages’,{
 method:‘POST’,
 headers:{‘Content-Type’:‘application/json’,‘x-api-key’:KEY,‘anthropic-version’:‘2023-06-01’,‘anthropic-dangerous-direct-browser-access’:‘true’},
-body:JSON.stringify({model:‘claude-sonnet-4-5’,max_tokens:600,messages:[{role:‘user’,content:`Match this person to their best Quest.\n\n${summary}\n\nQuests:\n- Becoming You (self discovery, identity, healing, purpose, becoming your true self)\n- Be Extraordinary (mindset, life design, consciousness)\n- Lifebook (life vision, 12 categories)\n- Unlimited Abundance (money mindset, wealth)\n- Rapid Transformational Hypnotherapy (healing, self worth)\n- Duality (energy, spirituality)\n- 10X Brain Power (memory, learning)\n- The Happiness Quest (happiness, fulfilment)\n- Focused & Indistractable (focus, habits)\n\nReturn ONLY valid JSON, no authors:\n{"quest":"quest name only","match":"94%","headline":"one powerful sentence why this is their quest","why":"2-3 personalised sentences","detail":"2 sentences on transformation","tags":["tag1","tag2","tag3","tag4"]}`}]})
-});
-const data=await res.json();
-const r=JSON.parse(data.content.map(b=>b.text||’’).join(’’).replace(/`json|`/g,’’).trim());
+body:JSON.stringify({model:‘claude-sonnet-4-5’,max_tokens:600,messages:[{role:‘user’,content:prompt}]})
+}).then(function(r){return r.json();}).then(function(data){
+var text=data.content.map(function(b){return b.text||’’;}).join(’’);
+var r=JSON.parse(text.replace(/`json|`/g,’’).trim());
 showResult(r);
-}catch(e){
-showResult({quest:‘Becoming You’,match:‘97%’,headline:‘You are ready to finally meet yourself.’,why:‘Based on your answers, you are at a turning point where you can feel something deeper calling. Becoming You was built exactly for this moment of readiness.’,detail:‘Over 30 days you will strip away everything you were told to be and finally discover who you actually are — with total clarity, freedom and purpose.’,tags:[‘Self Discovery’,‘Identity’,‘Purpose’,‘Healing’]});
-}
+}).catch(function(){
+showResult({quest:‘Becoming You’,match:‘97%’,headline:‘You are ready to finally meet yourself.’,why:‘Based on your answers, you are at a turning point where something deeper is calling. Becoming You was built exactly for this moment.’,detail:‘Over 30 days you will strip away everything you were told to be and discover who you actually are.’,tags:[‘Self Discovery’,‘Identity’,‘Purpose’,‘Healing’]});
+});
 }
 
 function showResult(r){
-document.getElementById(‘rPct’).textContent=r.match;
-document.getElementById(‘rQuest’).textContent=r.quest;
-document.getElementById(‘rWhy’).textContent=r.headline;
-document.getElementById(‘rDetail’).textContent=r.why+’ ‘+r.detail;
-document.getElementById(‘rTags’).innerHTML=r.tags.map(t=>`<span class="result-tag">${t}</span>`).join(’’);
-show(‘resultPage’);
-window.scrollTo({top:0,behavior:‘smooth’});
+document.getElementById(‘pload’).style.display=‘none’;
+document.getElementById(‘rpct’).textContent=r.match;
+document.getElementById(‘rqn’).textContent=r.quest;
+document.getElementById(‘rwy’).textContent=r.headline;
+document.getElementById(‘rdet’).textContent=r.why+’ ‘+r.detail;
+var tags=’’;
+for(var i=0;i<r.tags.length;i++) tags+=’<span class="rtag">’+r.tags[i]+’</span>’;
+document.getElementById(‘rtags’).innerHTML=tags;
+document.getElementById(‘pres’).style.display=‘block’;
+window.scrollTo(0,0);
 }
-
-}); // end DOMContentLoaded
 </script>
 
 </body>
