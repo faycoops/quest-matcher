@@ -45,7 +45,7 @@ align-items:center; justify-content:space-between;
 height:60px;
 }
 .nav-logo { display:flex; align-items:center; gap:10px; }
-.nav-logo-icon { width:28px; height:28px; background:var(–gradient); border-radius:6px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.65rem; font-weight:800; }
+.nav-logo-icon { width:28px; height:28px; background:linear-gradient(135deg,#5b21b6,#a855f7); border-radius:6px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.65rem; font-weight:800; box-shadow:0 0 12px rgba(168,85,247,0.5); }
 .nav-logo-text { font-size:0.78rem; font-weight:600; color:#fff; letter-spacing:0.08em; text-transform:uppercase; }
 .nav-count { font-size:0.72rem; color:rgba(255,255,255,0.4); font-weight:500; }
 
@@ -61,9 +61,9 @@ align-items:center; justify-content:center;
 padding:80px 28px; text-align:center;
 transition:all .45s cubic-bezier(.16,1,.3,1);
 }
-.screen.hidden-left  { opacity:0; transform:translateX(-40px); pointer-events:none; display:none; }
-.screen.hidden-right { opacity:0; transform:translateX(40px); pointer-events:none; display:none; }
-.screen.active       { opacity:1; transform:translateX(0); display:flex; }
+.screen.hidden-left  { opacity:0; transform:translateX(-40px); pointer-events:none; visibility:hidden; position:absolute; }
+.screen.hidden-right { opacity:0; transform:translateX(40px); pointer-events:none; visibility:hidden; position:absolute; }
+.screen.active       { opacity:1; transform:translateX(0); visibility:visible; position:relative; display:flex; }
 
 /* WELCOME */
 .welcome-badge {
@@ -370,13 +370,10 @@ const QUESTIONS = [
 let current = 0, answers = {};
 
 function startQuiz(){
-  const welcome = document.getElementById('screenWelcome');
-  const qScreen = document.getElementById('screenQ');
-  welcome.style.display = 'none';
+  document.getElementById('screenWelcome').className = 'screen hidden-left';
   document.getElementById('bottomNav').classList.add('on');
   renderQ(0);
-  qScreen.className = 'screen active';
-  qScreen.style.display = 'flex';
+  document.getElementById('screenQ').className = 'screen active';
 }
 
 function renderQ(idx){
@@ -478,8 +475,6 @@ window.scrollTo({top:0,behavior:‘smooth’});
 function resetQuiz(){
 current=0; answers={};
 document.getElementById(‘resultScreen’).classList.remove(‘on’);
-document.getElementById(‘screenQ’).style.display=‘none’;
-document.getElementById(‘screenWelcome’).style.display=‘flex’;
 document.getElementById(‘screenWelcome’).className=‘screen active’;
 document.getElementById(‘screenQ’).className=‘screen hidden-right’;
 document.getElementById(‘progressFill’).style.width=‘0%’;
