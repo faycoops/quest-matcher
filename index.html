@@ -181,6 +181,7 @@ nav { background:#0a0a0a; padding:0 28px; display:flex; align-items:center; just
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
 const KEY = 'YOUR_API_KEY_HERE';
 
 const QS = [
@@ -309,6 +310,8 @@ document.getElementById(‘rTags’).innerHTML=r.tags.map(t=>`<span class="resul
 show(‘resultPage’);
 window.scrollTo({top:0,behavior:‘smooth’});
 }
+
+}); // end DOMContentLoaded
 </script>
 
 </body>
