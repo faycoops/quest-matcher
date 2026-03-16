@@ -91,11 +91,13 @@ max-width:480px; margin:0 auto 52px; font-weight:300;
 }
 .btn-start {
 display:inline-flex; align-items:center; gap:12px;
-background:var(–gradient); color:#fff;
+background:linear-gradient(135deg, #5b21b6, #a855f7) !important;
+color:#fff !important;
 font-size:0.82rem; font-weight:700; padding:18px 52px;
 border-radius:100px; border:none; cursor:pointer;
 transition:all .3s; letter-spacing:0.04em;
-box-shadow:0 8px 40px rgba(91,33,182,0.3);
+box-shadow:0 8px 40px rgba(91,33,182,0.4);
+-webkit-appearance:none; appearance:none;
 }
 .btn-start:hover { transform:translateY(-3px); box-shadow:0 16px 50px rgba(91,33,182,0.4); }
 
@@ -328,7 +330,7 @@ border-left:3px solid var(–purple-pale);
       </div>
     </div>
     <div class="result-actions">
-      <button class="btn-explore" onclick="window.location.href='https://faycoops.github.io/becoming-you'">Explore This Quest →</button>
+      <button class="btn-explore" onclick="window.location.href='https://faycoops.github.io/Becoming-you/'">Explore This Quest →</button>
       <button class="btn-retry" onclick="resetQuiz()">↺ Retake</button>
     </div>
     <div class="result-footer">
@@ -368,9 +370,13 @@ const QUESTIONS = [
 let current = 0, answers = {};
 
 function startQuiz(){
-  document.getElementById('screenWelcome').className='screen hidden-left';
+  const welcome = document.getElementById('screenWelcome');
+  const qScreen = document.getElementById('screenQ');
+  welcome.style.display = 'none';
   document.getElementById('bottomNav').classList.add('on');
-  setTimeout(()=>{ renderQ(0); document.getElementById('screenQ').className='screen active'; },50);
+  renderQ(0);
+  qScreen.className = 'screen active';
+  qScreen.style.display = 'flex';
 }
 
 function renderQ(idx){
@@ -472,7 +478,8 @@ window.scrollTo({top:0,behavior:‘smooth’});
 function resetQuiz(){
 current=0; answers={};
 document.getElementById(‘resultScreen’).classList.remove(‘on’);
-document.getElementById(‘screenQ’).style.display=’’;
+document.getElementById(‘screenQ’).style.display=‘none’;
+document.getElementById(‘screenWelcome’).style.display=‘flex’;
 document.getElementById(‘screenWelcome’).className=‘screen active’;
 document.getElementById(‘screenQ’).className=‘screen hidden-right’;
 document.getElementById(‘progressFill’).style.width=‘0%’;
